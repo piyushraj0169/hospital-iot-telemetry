@@ -1,23 +1,28 @@
 "use client";
 import { useState } from "react";
 import { auth } from "@/lib/firebase";
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Activity } from "lucide-react";
 
-export default function LoginPage() {
+export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(auth, email, password);
       router.push("/dashboard");
     } catch (error: any) {
-      alert("Login failed: " + error.message);
+      alert("Signup failed: " + error.message);
     }
   };
 
@@ -37,10 +42,10 @@ export default function LoginPage() {
           <div className="flex justify-center mb-4 text-blue-500">
             <Activity size={48} />
           </div>
-          <h2 className="text-3xl font-extrabold tracking-tight">Welcome Back</h2>
-          <p className="mt-2 text-gray-400">Access the Central Telemetry Station</p>
+          <h2 className="text-3xl font-extrabold tracking-tight">Create Account</h2>
+          <p className="mt-2 text-gray-400">Join the IoT Telemetry Network</p>
         </div>
-        <form className="mt-8 space-y-5" onSubmit={handleLogin}>
+        <form className="mt-8 space-y-5" onSubmit={handleSignup}>
           <div className="space-y-4">
             <div>
               <label className="text-xs font-semibold uppercase text-gray-500 mb-2 block tracking-wider">Email Address</label>
@@ -54,10 +59,7 @@ export default function LoginPage() {
               />
             </div>
             <div>
-              <div className="flex justify-between items-center mb-2">
-                <label className="text-xs font-semibold uppercase text-gray-500 block tracking-wider">Password</label>
-                <Link href="/forgot-password" size="sm" className="text-xs font-bold text-blue-500 hover:text-blue-400">Forgot?</Link>
-              </div>
+              <label className="text-xs font-semibold uppercase text-gray-500 mb-2 block tracking-wider">Password</label>
               <input
                 type="password"
                 required
@@ -67,6 +69,17 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            <div>
+              <label className="text-xs font-semibold uppercase text-gray-500 mb-2 block tracking-wider">Confirm Password</label>
+              <input
+                type="password"
+                required
+                className="block w-full rounded-xl border border-gray-700 bg-gray-900 px-4 py-3 text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none transition-all"
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
           </div>
 
           <div>
@@ -74,7 +87,7 @@ export default function LoginPage() {
               type="submit"
               className="flex w-full justify-center rounded-xl bg-blue-600 px-4 py-4 text-sm font-bold text-white hover:bg-blue-700 focus:outline-none transition-all"
             >
-              Sign In
+              Sign Up
             </button>
           </div>
         </form>
@@ -93,8 +106,8 @@ export default function LoginPage() {
         </button>
 
         <p className="text-center text-sm text-gray-400 mt-8">
-          Don't have an account?{" "}
-          <Link href="/signup" className="font-bold text-blue-500 hover:text-blue-400">Sign Up</Link>
+          Already have an account?{" "}
+          <Link href="/login" className="font-bold text-blue-500 hover:text-blue-400">Log In</Link>
         </p>
       </div>
     </div>
