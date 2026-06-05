@@ -1,0 +1,27 @@
+{
+  "heart_rate": {
+    "normal_min": 60, "normal_max": 100,
+    "warning_min": 50, "warning_max": 120,
+    "unit": "bpm"
+  },
+  "oxygen_level": {
+    "normal_min": 95, "normal_max": 100,
+    "warning_min": 91, "warning_max": 100,
+    "unit": "%"
+  },
+  "temperature": {
+    "normal_min": 97.0, "normal_max": 99.5,
+    "warning_min": 95.0, "warning_max": 102.0,
+    "unit": "°F"
+  },
+  "blood_pressure_sys": {
+    "normal_min": 90, "normal_max": 130,
+    "warning_min": 80, "warning_max": 150,
+    "unit": "mmHg"
+  },
+  "respiratory_rate": {
+    "normal_min": 12, "normal_max": 20,
+    "warning_min": 10, "warning_max": 25,
+    "unit": "breaths/min"
+  }
+}
