@@ -30,4 +30,6 @@ export interface Alert {
   isResolved: boolean;
   aiExplanation?: string;
   recommendations?: string[];
+  vitalsAtTrigger?: VitalReading;
 }
+

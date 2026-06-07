@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { patientId, ...data } = body;
-    await adminDb.collection("patients").document(patientId).set({
+    await adminDb.collection("patients").doc(patientId).set({
       ...data,
       status: 'active',
       isSimulated: false,

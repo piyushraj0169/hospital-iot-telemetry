@@ -36,5 +36,23 @@ def write_alert(patient_id, vitals, violations, ai_result):
     return alert
 
 def resolve_alert(patient_id):
-    """Called when vitals return to normal — clears RTDB active alert."""
-    rtdb.reference(f"alerts/{patient_id}/active").delete()
+    """Called when vitals return to normal — clears RTDB active alert and marks Firestore entry resolved."""
+    try:
+        active_ref = rtdb.reference(f"alerts/{patient_id}/active")
+        active_alert = active_ref.get()
+        if active_alert and isinstance(active_alert, dict):
+            alert_id = active_alert.get("alertId")
+            if alert_id:
+                ts = int(time.time() * 1000)
+                fs = get_fs()
+                fs.collection("patients").document(patient_id)\
+                  .collection("alerts").document(alert_id).update({
+                      "isResolved": True,
+                      "resolvedAt": ts
+                  })
+    except Exception as e:
+        print(f"[ERROR] Failed to mark alert as resolved in Firestore: {e}")
+    finally:
+        rtdb.reference(f"alerts/{patient_id}/active").delete()
+
+

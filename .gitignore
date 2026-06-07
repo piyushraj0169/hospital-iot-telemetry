@@ -1,4 +1,4 @@
-﻿node_modules/
+node_modules/
 .next/
 out/
 build/
@@ -25,3 +25,4 @@ service-account.json
 .idea/
 .DS_Store
 *.log
+keys/
