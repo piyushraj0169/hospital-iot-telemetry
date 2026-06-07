@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { exec, spawn } from "child_process";
 import path from "path";
 
-const ROOT = "C:\\codes\\capgemini\\hospital-iot-agent";
+const ROOT = path.resolve(process.cwd(), "..");
 
 export async function POST(req: NextRequest) {
   const { target, action } = await req.json();
