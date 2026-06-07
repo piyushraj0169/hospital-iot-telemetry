@@ -28,7 +28,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="flex min-h-screen bg-gray-900 text-white font-sans">
-      <Toaster position="top-right" theme="dark" richColors />
+      <Toaster position="top-center" theme="dark" richColors />
       <AlertNotifier />
       
       {/* Sidebar */}
